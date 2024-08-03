@@ -7,9 +7,14 @@ export default {
 			secondary: '#081430',
 			white: '#FFFFFF',
 			gray: '#D3D3D3',
-			darkBlue: '#081430,'
+			darkBlue: '#081430'
 		},
-		extend: {}
+		extend: {
+			fontFamily: {
+				marcellus: ['Marcellus'],
+				montserrat: ['Montserrat']
+			}
+		}
 	},
 	plugins: []
 };

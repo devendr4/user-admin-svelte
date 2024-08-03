@@ -1,10 +1,11 @@
 <script lang="ts">
 	export const outline: boolean = false;
 	export let large: boolean = false;
+	export let action: boolean = false;
 </script>
 
 <button
-	class={`${outline ? 'bg-white text-primary border-primary border-2' : 'bg-primary text-white'} ${large && 'px-20'} font-bold py-1 px-5  uppercase`}
+	class={`${outline ? 'bg-white text-primary border-primary border-2' : 'bg-primary text-white'} ${large ? 'px-20' : action ? 'px-2' : 'px-5'} font-bold py-0.5  tracking-wide uppercase`}
 >
 	<slot />
 </button>

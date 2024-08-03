@@ -4,9 +4,10 @@
 	import Table from '$lib/components/Table.svelte';
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<Button outline>outline</Button>
-<Button large>large</Button>
-<Button>small</Button>
-<Table />
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<div class="m-10">
+	<h1 class="uppercase font-marcellus text-4xl spacing tracking-normal">redsky coding challenge</h1>
+	<span class="flex justify-end">
+		<Button>create new user</Button>
+	</span>
+	<Table />
+</div>
