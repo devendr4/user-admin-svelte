@@ -3,6 +3,7 @@
 	import type { User } from '../../types';
 	import Button from './Button.svelte';
 	import { PUBLIC_API_URL } from '$env/static/public';
+	import TitleBanner from './TitleBanner.svelte';
 	let users: User[] = [];
 
 	onMount(async () => {
@@ -15,7 +16,7 @@
 </script>
 
 <div class="border border-primary mt-5 overflow-x-auto font-montserrat">
-	<div class="bg-primary py-2 px-4 uppercase text-white font-bold">User list</div>
+	<TitleBanner>User list</TitleBanner>
 	<div class="flex gap-4 border-b-2 p-3 border-gray">
 		<span class="uppercase w-2/12 font-bold">avatar</span>
 		<span class="uppercase w-3/12 font-bold">first name</span>

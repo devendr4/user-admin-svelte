@@ -1,5 +1,5 @@
 <script lang="ts">
-	export const outline: boolean = false;
+	export let outline: boolean = false;
 	export let large: boolean = false;
 	export let action: boolean = false;
 </script>

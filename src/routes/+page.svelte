@@ -2,6 +2,7 @@
 	import '../app.css';
 	import Button from '$lib/components/Button.svelte';
 	import Table from '$lib/components/Table.svelte';
+	import UserForm from '$lib/components/UserForm.svelte';
 </script>
 
 <div class="m-10">
@@ -9,5 +10,6 @@
 	<span class="flex justify-end">
 		<Button>create new user</Button>
 	</span>
-	<Table />
+	<UserForm />
+	<!-- <Table /> -->
 </div>
