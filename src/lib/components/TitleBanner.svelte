@@ -1,1 +1,5 @@
-<div class="bg-primary py-2 px-4 uppercase text-white font-bold"><slot /></div>
+<h2
+	class="bg-primary py-2 font-montserrat px-4 text-xl uppercase text-white font-semibold tracking-wider"
+>
+	<slot />
+</h2>
