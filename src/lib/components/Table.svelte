@@ -4,16 +4,28 @@
 	import Button from './Button.svelte';
 	import { PUBLIC_API_URL } from '$env/static/public';
 	import TitleBanner from './TitleBanner.svelte';
+	import axios from 'axios';
+	import { userList } from '../../store';
 	import { isModalOpen } from '../../store';
-	let users: User[] = [];
+	import toast from 'svelte-french-toast';
+	let users: User[];
+	userList.subscribe((u) => (users = u));
 
 	onMount(async () => {
-		const response = await fetch(PUBLIC_API_URL);
-		const data = await response.json();
-		// apiData.set(data);
-		console.log(users);
-		users = data.users;
+		await getUsers();
 	});
+
+	async function getUsers() {
+		const response = await axios.get(PUBLIC_API_URL + 'users');
+		const data = await response.data;
+		userList.set(data.users);
+	}
+
+	async function deleteUser(id: number) {
+		await axios.delete(PUBLIC_API_URL + 'user/' + id);
+		toast.success('User was successfully deleted!', { position: 'bottom-right' });
+		await getUsers();
+	}
 </script>
 
 <div class="mx-16">
@@ -40,8 +52,8 @@
 				<p class="w-3/12">{user.last_name}</p>
 				<p class="w-3/12">{user.email}</p>
 				<span class="w-4/12 flex justify-end gap-5 items-center">
-					<Button action>edit</Button>
-					<Button action>delete</Button>
+					<Button action onClick={() => isModalOpen.set(true)}>edit</Button>
+					<Button action onClick={() => deleteUser(user.id)}>delete</Button>
 				</span>
 			</div>
 		{/each}

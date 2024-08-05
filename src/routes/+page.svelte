@@ -1,9 +1,8 @@
 <script lang="ts">
 	import '../app.css';
-	import Button from '$lib/components/Button.svelte';
 	import Table from '$lib/components/Table.svelte';
 	import Modal from '$lib/components/Modal.svelte';
-	let isOpen = false;
+	import { Toaster } from 'svelte-french-toast';
 </script>
 
 <h1
@@ -13,5 +12,6 @@
 </h1>
 <div class="m-10">
 	<Table />
-	<Modal {isOpen} />
+	<Modal />
 </div>
+<Toaster />
