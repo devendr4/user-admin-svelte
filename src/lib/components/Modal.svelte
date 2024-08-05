@@ -1,13 +1,17 @@
 <script lang="ts">
 	import type { User } from '../../types';
 	import TitleBanner from './TitleBanner.svelte';
-	import { isModalOpen } from '../../store';
+	import { editedUser, isModalOpen } from '../../store';
 	import UserForm from './UserForm.svelte';
 
 	export let userData: User | undefined = undefined;
 	let modalState: boolean;
 
 	isModalOpen.subscribe((v) => (modalState = v));
+	editedUser.subscribe((v) => {
+		modalState = !!v;
+		userData = v;
+	});
 </script>
 
 <div
