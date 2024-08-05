@@ -6,8 +6,7 @@
 	import Input from './Input.svelte';
 	import { PUBLIC_API_URL } from '$env/static/public';
 	import toast from 'svelte-french-toast';
-	import { z } from 'zod';
-	import { superForm, setMessage, setError } from 'sveltekit-superforms';
+	import { superForm, setMessage, setError, superValidate } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 
 	export let userData: User | undefined = { first_name: '', last_name: '', email: '', avatar: '' };
@@ -17,14 +16,7 @@
 	let avatar = userData?.avatar;
 	export let data;
 
-	const schema = z.object({
-		first_name: z.string(),
-		last_name: z.string(),
-		email_address: z.string(),
-		avatar: z.string()
-	});
-
-	const { enhance, form } = superForm(data.form, {
+	const { enhance } = superForm(data?.form, {
 		SPA: true,
 		validators: zod(schema),
 		onUpdate({ form }) {
