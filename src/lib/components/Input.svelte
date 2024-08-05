@@ -1,9 +1,10 @@
 <script lang="ts">
 	export let label: string;
-	export let value: string;
+	export let value: string = '';
+	export let name: string;
 </script>
 
 <div class="flex flex-col">
 	<label class="uppercase font-montserrat font-semibold text-darkBlue">{label}</label>
-	<input class="border-gray border" {value} />
+	<input bind:value={name} class="border-gray border" {name} />
 </div>
