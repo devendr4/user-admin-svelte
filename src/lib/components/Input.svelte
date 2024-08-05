@@ -5,6 +5,6 @@
 </script>
 
 <div class="flex flex-col">
-	<label class="uppercase font-montserrat font-semibold text-darkBlue">{label}</label>
-	<input bind:value={name} class="border-gray border" {name} />
+	<label for={name} class="uppercase font-montserrat font-semibold text-darkBlue">{label}</label>
+	<input bind:value class="border-gray border" {name} />
 </div>

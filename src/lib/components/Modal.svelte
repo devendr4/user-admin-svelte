@@ -6,6 +6,8 @@
 
 	export let userData: User | undefined = undefined;
 	let modalState: boolean;
+	export let form;
+	console.log(form);
 
 	isModalOpen.subscribe((v) => (modalState = v));
 	editedUser.subscribe((v) => {
@@ -55,7 +57,7 @@
 			>
 				<TitleBanner>{userData ? 'edit' : 'create new'} user</TitleBanner>
 				<div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-					<UserForm />
+					<UserForm {form} />
 				</div>
 			</div>
 		</div>

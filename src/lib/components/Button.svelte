@@ -2,7 +2,7 @@
 	export let outline: boolean = false;
 	export let large: boolean = false;
 	export let action: boolean = false;
-	export let onClick: () => void;
+	export let onClick = () => {};
 	export let type: 'button' | 'reset' | 'submit' | null | undefined = undefined;
 </script>
 
