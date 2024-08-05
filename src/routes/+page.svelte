@@ -8,8 +8,6 @@
 
 	export let data: PageData;
 	const { form } = superForm(data.form);
-
-	console.log(form);
 </script>
 
 <h1
@@ -19,6 +17,6 @@
 </h1>
 <div class="m-10">
 	<Table />
-	<Modal {form} />
+	<Modal form={$form} />
 </div>
 <Toaster />

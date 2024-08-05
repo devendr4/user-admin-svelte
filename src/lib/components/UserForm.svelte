@@ -1,42 +1,63 @@
 <script lang="ts">
-	import axios from 'axios';
-	import { editedUser, isModalOpen } from '../../store';
+	import { editedUser, getUsers, isModalOpen } from '../../store';
 	import type { User } from '../../types';
 	import Button from './Button.svelte';
 	import Input from './Input.svelte';
-	import { PUBLIC_API_URL } from '$env/static/public';
 	import toast from 'svelte-french-toast';
-	import SuperDebug, { superForm, setMessage, setError, superValidate } from 'sveltekit-superforms';
-	import { zod } from 'sveltekit-superforms/adapters';
+	import { superForm } from 'sveltekit-superforms';
 
-	export let userData: User | undefined = { first_name: '', last_name: '', email: '', avatar: '' };
+	let userData: User | undefined = { first_name: '', last_name: '', email: '', avatar: '' };
 	export let form: any;
 
-	const { enhance } = superForm($form);
+	editedUser.subscribe((v) => {
+		userData = v;
+		form = { ...form, ...userData };
+		console.log('edit', form);
+		console.log(userData, form);
+	});
+	const { enhance, reset } = superForm(
+		{ ...form, ...userData },
+		{
+			resetForm: true,
+			applyAction: true,
 
-	editedUser.subscribe((v) => (userData = v));
+			onError: ({ result }) => {
+				console.log(result);
+				toast.error("User couldn't be created!");
+				reset();
+				editedUser.set(undefined);
+			},
+			onResult: ({ result }) => {
+				if (result.type == 'success') {
+					toast.success('User was successfully created!');
+					reset();
+					getUsers();
+					editedUser.set(undefined);
+					isModalOpen.set(false);
+				}
+			}
+		}
+	);
 </script>
 
-<div class="-mx-2">
-	<SuperDebug data={$form} />
-	<form class="flex flex-col gap-2" use:enhance method="POST">
-		<Input name="first_name" label="first name" value={$form.first_name} />
+<form class="flex -mx-2 flex-col gap-2" use:enhance method="POST" on:submit={() => {}}>
+	<input class="hidden" type="hidden" name="id" value={form.id} />
+	<Input name="first_name" label="first name" value={form.first_name} />
 
-		<Input name="last_name" label="last name" value={$form.last_name} />
+	<Input name="last_name" label="last name" value={form.last_name} />
 
-		<Input name="email_address" label="email address" value={$form.email_address} />
+	<Input name="email" label="email address" value={form.email} />
 
-		<Input name="avatar" label="avatar image link" value={$form.avatar} />
-		<span class="flex justify-end mt-10 gap-2">
-			<Button
-				type="button"
-				outline
-				onClick={() => {
-					isModalOpen.set(false);
-					editedUser.set(undefined);
-				}}>cancel</Button
-			>
-			<Button type="submit">{userData ? 'save' : 'create'}</Button>
-		</span>
-	</form>
-</div>
+	<Input name="avatar" label="avatar image link" value={form.avatar} />
+	<span class="flex justify-end mt-10 gap-2">
+		<Button
+			type="button"
+			outline
+			onClick={() => {
+				isModalOpen.set(false);
+				editedUser.set(undefined);
+			}}>cancel</Button
+		>
+		<Button type="submit">{userData ? 'save' : 'create'}</Button>
+	</span>
+</form>

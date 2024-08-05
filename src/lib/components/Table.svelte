@@ -5,7 +5,7 @@
 	import { PUBLIC_API_URL } from '$env/static/public';
 	import TitleBanner from './TitleBanner.svelte';
 	import axios from 'axios';
-	import { userList, isModalOpen, editedUser } from '../../store';
+	import { userList, isModalOpen, editedUser, getUsers } from '../../store';
 	import toast from 'svelte-french-toast';
 	let users: User[];
 	userList.subscribe((u) => (users = u));
@@ -13,12 +13,6 @@
 	onMount(async () => {
 		await getUsers();
 	});
-
-	async function getUsers() {
-		const response = await axios.get(PUBLIC_API_URL + 'users');
-		const data = await response.data;
-		userList.set(data.users);
-	}
 
 	async function deleteUser(id: number) {
 		await axios.delete(PUBLIC_API_URL + 'user/' + id);
@@ -51,7 +45,13 @@
 				<p class="w-3/12">{user.last_name}</p>
 				<p class="w-3/12">{user.email}</p>
 				<span class="w-4/12 flex justify-end gap-5 items-center">
-					<Button action onClick={() => editedUser.set(user)}>edit</Button>
+					<Button
+						action
+						onClick={() => {
+							console.log(user);
+							editedUser.set(user);
+						}}>edit</Button
+					>
 					<Button action onClick={() => deleteUser(user.id)}>delete</Button>
 				</span>
 			</div>
