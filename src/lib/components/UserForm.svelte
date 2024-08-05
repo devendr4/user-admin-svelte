@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { isModalOpen } from '../../store';
 	import Button from './Button.svelte';
 	import Input from './Input.svelte';
 </script>
@@ -13,8 +14,12 @@
 
 		<Input label="avatar image link" />
 		<span class="flex justify-end mt-10 gap-2">
-			<Button outline>cancel</Button>
-			<Button>create</Button>
+			<Button outline onClick={() => isModalOpen.set(false)}>cancel</Button>
+			<Button
+				onClick={() => {
+					console.log(2);
+				}}>create</Button
+			>
 		</span>
 	</form>
 </div>

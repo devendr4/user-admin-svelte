@@ -1,13 +1,21 @@
 <script lang="ts">
 	import type { User } from '../../types';
 	import TitleBanner from './TitleBanner.svelte';
+	import { isModalOpen } from '../../store';
 	import UserForm from './UserForm.svelte';
 
 	export let userData: User | undefined = undefined;
-	let isOpen = false;
+	let modalState: boolean;
+
+	isModalOpen.subscribe((v) => (modalState = v));
 </script>
 
-<div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+<div
+	class={`relative ${modalState ? 'z-10' : '-z-10'} `}
+	aria-labelledby="modal-title"
+	role="dialog"
+	aria-modal="true"
+>
 	<!--
     Background backdrop, show/hide based on modal state.
 
@@ -19,11 +27,13 @@
       To: "opacity-0"
   -->
 	<div
-		class={`fixed inset-0 bg-darkBlue bg-opacity-${isOpen ? '60' : '0'}  transition-opacity`}
+		class={`fixed inset-0 bg-darkBlue  bg-opacity-0 ${modalState && 'bg-opacity-60'}  transition-opacity`}
 		aria-hidden="true"
 	></div>
 
-	<div class={`fixed inset-0 z-10 w-screen opacity-${isOpen ? '100' : '0'} overflow-y-auto`}>
+	<div
+		class={`fixed inset-0 z-20  w-screen opacity-${modalState ? '100 ' : '0 hidden'}  overflow-y-auto`}
+	>
 		<div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
 			<!--
         Modal panel, show/hide based on modal state.

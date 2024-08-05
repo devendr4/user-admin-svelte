@@ -4,6 +4,7 @@
 	import Button from './Button.svelte';
 	import { PUBLIC_API_URL } from '$env/static/public';
 	import TitleBanner from './TitleBanner.svelte';
+	import { isModalOpen } from '../../store';
 	let users: User[] = [];
 
 	onMount(async () => {
@@ -17,7 +18,7 @@
 
 <div class="mx-16">
 	<span class="flex justify-end">
-		<Button>create new user</Button>
+		<Button onClick={() => isModalOpen.set(true)}>create new user</Button>
 	</span>
 	<div class="border border-primary mt-5 overflow-x-auto font-montserrat">
 		<TitleBanner>User list</TitleBanner>
