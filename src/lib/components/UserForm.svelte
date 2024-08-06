@@ -5,50 +5,49 @@
 	import Input from './Input.svelte';
 	import toast from 'svelte-french-toast';
 	import { superForm } from 'sveltekit-superforms';
+	import Error from './Error.svelte';
 
 	let userData: User | undefined = { first_name: '', last_name: '', email: '', avatar: '' };
-	export let form: any;
+	export let formValues: User;
 
 	editedUser.subscribe((v) => {
 		userData = v;
-		form = { ...form, ...userData };
-		console.log('edit', form);
-		console.log(userData, form);
+		formValues = { ...formValues, ...userData };
 	});
-	const { enhance, reset } = superForm(
-		{ ...form, ...userData },
+	const { enhance, reset, errors } = superForm(
+		{ ...formValues, ...userData },
 		{
 			resetForm: true,
 			applyAction: true,
 
-			onError: ({ result }) => {
-				console.log(result);
-				toast.error("User couldn't be created!");
-				reset();
-				editedUser.set(undefined);
-			},
 			onResult: ({ result }) => {
 				if (result.type == 'success') {
-					toast.success('User was successfully created!');
-					reset();
+					toast.success(`User was successfully ${userData ? 'edited' : 'created'}!`);
 					getUsers();
+					reset();
 					editedUser.set(undefined);
 					isModalOpen.set(false);
 				}
 			}
 		}
 	);
+	console.log(errors);
 </script>
 
-<form class="flex -mx-2 flex-col gap-2" use:enhance method="POST" on:submit={() => {}}>
-	<input class="hidden" type="hidden" name="id" value={form.id} />
-	<Input name="first_name" label="first name" value={form.first_name} />
+<form class="flex -mx-2 flex-col gap-2" use:enhance method="POST">
+	<input class="hidden" type="hidden" name="id" value={formValues.id} />
+	<Input name="first_name" label="first name" value={formValues.first_name} />
+	{#if $errors.first_name}<Error>{$errors.first_name}</Error>{/if}
 
-	<Input name="last_name" label="last name" value={form.last_name} />
+	<Input name="last_name" label="last name" value={formValues.last_name} />
+	{#if $errors.last_name}<Error>{$errors.last_name}</Error>{/if}
 
-	<Input name="email" label="email address" value={form.email} />
+	<Input name="email" label="email address" value={formValues.email} />
+	{#if $errors.email}<Error>{$errors.email}</Error>{/if}
 
-	<Input name="avatar" label="avatar image link" value={form.avatar} />
+	<Input name="avatar" label="avatar image link" value={formValues.avatar} />
+	{#if $errors.avatar}<Error>{$errors.avatar}</Error>{/if}
+
 	<span class="flex justify-end mt-10 gap-2">
 		<Button
 			type="button"

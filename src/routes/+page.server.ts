@@ -8,16 +8,15 @@ import { PUBLIC_API_URL } from '$env/static/public';
 
 const schema = z.object({
 	id: z.string().optional(),
-	first_name: z.string().min(1),
-	last_name: z.string().min(1),
-	email: z.string().email().min(1),
+	first_name: z.string().min(2),
+	last_name: z.string().min(2),
+	email: z.string().email().min(2),
 	avatar: z.string().url()
 });
 
 export const load = async (event) => {
-	const form = await superValidate(event, zod(schema));
+	const form = await superValidate(event, zod(schema), { errors: true });
 
-	// Always return { form } in load functions
 	return { form };
 };
 export const actions = {
@@ -31,7 +30,6 @@ export const actions = {
 		}
 		const { data } = form;
 
-		console.log(data);
 		if (!data?.id)
 			await axios.post(PUBLIC_API_URL + 'user', {
 				first_name: data.first_name,
