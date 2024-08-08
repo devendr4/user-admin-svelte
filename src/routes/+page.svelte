@@ -4,11 +4,8 @@
 	import Modal from '$lib/components/Modal.svelte';
 	import { Toaster } from 'svelte-french-toast';
 	import type { PageData } from './$types';
-	import { superForm } from 'sveltekit-superforms';
 
 	export let data: PageData;
-	const { form, errors } = superForm(data.form);
-	console.log($errors);
 </script>
 
 <h1
@@ -18,6 +15,6 @@
 </h1>
 <div class="m-2 md:m-10">
 	<Table />
-	<Modal form={$form} />
+	<Modal {data} />
 </div>
 <Toaster />

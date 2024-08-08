@@ -3,10 +3,11 @@
 	import TitleBanner from './TitleBanner.svelte';
 	import { editedUser, isModalOpen } from '../../store';
 	import UserForm from './UserForm.svelte';
+	import type { PageData } from '../../routes/$types';
 
-	export let userData: User | undefined = undefined;
+	let userData: User | undefined = undefined;
+	export let data: PageData;
 	let modalState: boolean;
-	export let form;
 	isModalOpen.subscribe((v) => (modalState = v));
 	editedUser.subscribe((v) => {
 		modalState = !!v;
@@ -34,7 +35,7 @@
 			>
 				<TitleBanner>{userData ? 'edit' : 'create new'} user</TitleBanner>
 				<div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-					<UserForm formValues={form} />
+					<UserForm {data} />
 				</div>
 			</div>
 		</div>
