@@ -31,6 +31,7 @@
 				getUsers();
 				reset();
 				editedUser.set(undefined);
+				formValues = undefined;
 				isModalOpen.set(false);
 			}
 		}
